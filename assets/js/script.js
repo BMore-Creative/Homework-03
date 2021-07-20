@@ -96,33 +96,44 @@ const uppercaseCharacters = [
   'Z',
 ];
 
+//Runs consecutive prompts to determine user's password preferences
 function choosePasswordOptions() {
+  //Prompts user to input desired password length and stores input as variable
   const userLength = prompt('How many characters would you like your password to have?');
+  //Converts user input to number value using base 10
   const length = parseInt(userLength, 10);
   
+  //Gives error alert if password is less than 8 characters. Ends prompts
   if (length < 8) {
     alert('Error: Password length must be greater than 7 characters');
     return null;
   };
 
+  //Gives error alert if password is greater than 128 characters. Ends prompts
   if (length > 128) {
     alert('Error: Password length must be less than 129 characters');
     return null;
   };
 
+  //Gives error alert if user gives non-numeric input. Ends prompts
   if (Number.isNaN(length)){
     alert('Error: Password length must be given as a number')
     return null;
   };
 
+  //Stores boolean of user's desire to include special characters
   const hasSpecialCharacters = confirm('Click OK to have password include special characters');
 
+  //Stores boolean of user's desire to include numeric characters
   const hasNumericCharacters = confirm('Click OK to have password include numeric characters');
 
+  //Stores boolean of user's desire to include lowercase characters
   const hasLowercaseCharacters = confirm('Click OK to have password include lowercase characters');
 
+  //Stores boolean of user's desire to include uppercase characters
   const hasUppercaseCharacters = confirm('Click OK to have password include uppercase characters');
 
+  //Gives error alert if all character booleans return false. Ends prompts
   if (
     hasSpecialCharacters === false &&
     hasNumericCharacters === false &&
@@ -133,6 +144,7 @@ function choosePasswordOptions() {
       return null;
     };
 
+  //Stores user's password parameters as object for use outside of function
   const passwordOptions = {
     length: length,
     hasSpecialCharacters: hasSpecialCharacters,
@@ -143,52 +155,70 @@ function choosePasswordOptions() {
   
   return passwordOptions;
 };
+
+//Generates password using user inputted specifications 
 function generatePassword() {
-  const options = choosePasswordOptions();
   
+  //Stores user inputs as variable that is usable within function
+  const options = choosePasswordOptions();
+
+  //Creates alterable array for password generation
+  let genPass = [];
+  
+  //Creates alterable array for allowed characters in password
+  let allowedCharacters = [];
+
+  //Creates alterable array for required characters in password
+  let requiredCharacters = [];
+
+  //Returns random array index for use in password generation
   function random(array) {
     const randNum = Math.floor(Math.random() * array.length);
     const randSelection = array[randNum];
     return randSelection;
-  }
+  };
 
-  let genPass = [];
-  
-  let characterOptions = [];
-
-  let requiredCharacters = [];
-
+  //Adds specialCharacters array to allowed characters if user desires special characters in password
+  //Adds a single, random index from specialCharacters array to required portion of password
   if (options.hasSpecialCharacters === true) {
-    characterOptions = characterOptions.concat(specialCharacters);
+    allowedCharacters = allowedCharacters.concat(specialCharacters);
     requiredCharacters.push(random(specialCharacters));
   };
 
+  //Adds numericCharacters array to allowed characters if user desires numeric characters in password
+  //Adds a single, random index from numericCharacters array to required portion of password
   if (options.hasNumericCharacters === true) {
-    characterOptions = characterOptions.concat(numericCharacters);
+    allowedCharacters = allowedCharacters.concat(numericCharacters);
     requiredCharacters.push(random(numericCharacters));
   };
 
+  //Adds lowercaseCharacters array to allowed characters if user desires lowercase characters in password
+  //Adds a single, random index from lowercaseCharacters array to required portion of password
   if (options.hasLowercaseCharacters === true) {
-    characterOptions = characterOptions.concat(lowercaseCharacters);
+    allowedCharacters = allowedCharacters.concat(lowercaseCharacters);
     requiredCharacters.push(random(lowercaseCharacters));
   };
 
+  //Adds uppercaseCharacters array to allowed characters if user desires uppercase characters in password
+  //Adds a single, random index from uppercaseCharacters array to required portion of password
   if (options.hasUppercaseCharacters === true) {
-    characterOptions = characterOptions.concat(uppercaseCharacters);
+    allowedCharacters = allowedCharacters.concat(uppercaseCharacters);
     requiredCharacters.push(random(uppercaseCharacters));
   };
 
+  //Adds characters from 'allowed' array to generated password until password equals user's desired length
   for (let i = 0; i < options.length; i++) {
-    let characterOption = random(characterOptions);
+    let characterOption = random(allowedCharacters);
 
     genPass.push(characterOption);
   };
 
+  //Alters first characters in generated password to equal one character from each 'required' array
   for (let i = 0; i < requiredCharacters.length; i++) {
     genPass[i] = requiredCharacters[i];
   };
 
-  console.log(characterOptions, requiredCharacters);
+  //Changes generated password to string and allows use outside of function
   return genPass.join('');
 };
 
