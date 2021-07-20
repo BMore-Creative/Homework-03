@@ -37,7 +37,7 @@ const specialCharacters = [
 const numericCharacters = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 
 // Lowercase character array for password generation
-const lowerCasedCharacters = [
+const lowercaseCharacters = [
   'a',
   'b',
   'c',
@@ -67,7 +67,7 @@ const lowerCasedCharacters = [
 ];
 
 // Uppercase character array for password generation
-const upperCasedCharacters = [
+const uppercaseCharacters = [
   'A',
   'B',
   'C',
@@ -140,13 +140,57 @@ function choosePasswordOptions() {
     hasLowercaseCharacters: hasLowercaseCharacters,
     hasUppercaseCharacters: hasUppercaseCharacters
   };
-  console.log(passwordOptions);
+  
   return passwordOptions;
 };
-choosePasswordOptions();
 function generatePassword() {
+  const options = choosePasswordOptions();
   
-}
+  function random(array) {
+    const randNum = Math.floor(Math.random() * array.length);
+    const randSelection = array[randNum];
+    return randSelection;
+  }
+
+  let genPass = [];
+  
+  let characterOptions = [];
+
+  let requiredCharacters = [];
+
+  if (options.hasSpecialCharacters === true) {
+    characterOptions = characterOptions.concat(specialCharacters);
+    requiredCharacters.push(random(specialCharacters));
+  };
+
+  if (options.hasNumericCharacters === true) {
+    characterOptions = characterOptions.concat(numericCharacters);
+    requiredCharacters.push(random(numericCharacters));
+  };
+
+  if (options.hasLowercaseCharacters === true) {
+    characterOptions = characterOptions.concat(lowercaseCharacters);
+    requiredCharacters.push(random(lowercaseCharacters));
+  };
+
+  if (options.hasUppercaseCharacters === true) {
+    characterOptions = characterOptions.concat(uppercaseCharacters);
+    requiredCharacters.push(random(uppercaseCharacters));
+  };
+
+  for (let i = 0; i < options.length; i++) {
+    let characterOption = random(characterOptions);
+
+    genPass.push(characterOption);
+  };
+
+  for (let i = 0; i < requiredCharacters.length; i++) {
+    genPass[i] = requiredCharacters[i];
+  };
+
+  console.log(characterOptions, requiredCharacters);
+  return genPass.join('');
+};
 
 // Assignment Code
 var generateBtn = document.querySelector("#generate");
