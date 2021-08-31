@@ -6,4 +6,4 @@ Web application that helps users generate a randomized password to their specifi
 Clicking the 'Generate Password' button prompts the user to input their desired password qualities, such as, length and inclusion of special, numeric, lower, and uppercase numbers.
 The generated password is then displayed on the page for the user to use.
 
-https://bmore-creative.github.io/Homework-03/
+https://bmore-creative.github.io/Password-Generator/
