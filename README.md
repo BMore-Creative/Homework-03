@@ -1,4 +1,4 @@
-# Homework-03
+# Password Generator
 
 ![Homework-03](https://user-images.githubusercontent.com/80925456/126366447-0cacf9e2-4633-43f8-8350-b1f57275c06c.JPG)
 
